@@ -1,5 +1,6 @@
 package com.unimayor.TiendaVirtual.Natural_Samada.Controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.unimayor.TiendaVirtual.Natural_Samada.Service.ProductosService;
 import com.unimayor.TiendaVirtual.Natural_Samada.Entity.Productos;
@@ -23,8 +24,14 @@ public class ProductosController {
     }
 
     @GetMapping("/{id}")
-    public Productos obtener(@PathVariable Long id) {
-        return service.obtenerPorId(id);
+    public ResponseEntity<Productos> obtener(@PathVariable Long id) {
+        Productos producto = service.obtenerPorId(id);
+
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(producto);
     }
 
     @PostMapping
@@ -33,13 +40,26 @@ public class ProductosController {
     }
 
     @PutMapping("/{id}")
-    public Productos actualizar(@PathVariable Long id, @RequestBody Productos producto) {
-        return service.actualizarProducto(id, producto);
+    public ResponseEntity<Productos> actualizar(@PathVariable Long id, @RequestBody Productos producto) {
+        Productos existente = service.obtenerPorId(id);
+
+        if (existente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(service.actualizarProducto(id, producto));
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable Long id) {
+        Productos producto = service.obtenerPorId(id);
+
+        if (producto == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         service.eliminarPorId(id);
+        return ResponseEntity.ok("Producto eliminado correctamente");
     }
 
     @GetMapping("/buscar")

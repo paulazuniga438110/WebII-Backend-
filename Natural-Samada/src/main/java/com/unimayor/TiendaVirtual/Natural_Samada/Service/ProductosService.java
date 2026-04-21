@@ -32,8 +32,20 @@ public class ProductosService {
     }
 
     public Productos actualizarProducto(Long id, Productos producto){
-        producto.setId(id);
-        return productosRepository.save(producto);
+        Productos existente = productosRepository.findById(id).orElse(null);
+
+        if (existente == null) {
+            return null;
+        }
+
+        existente.setNombre(producto.getNombre());
+        existente.setPrecio(producto.getPrecio());
+        existente.setStock(producto.getStock());
+        existente.setCategoria(producto.getCategoria());
+        existente.setImagen(producto.getImagen());
+        existente.setDescuento(producto.getDescuento());
+
+        return productosRepository.save(existente);
     }
 
     public List<Productos> buscarPorNombre(String nombre){

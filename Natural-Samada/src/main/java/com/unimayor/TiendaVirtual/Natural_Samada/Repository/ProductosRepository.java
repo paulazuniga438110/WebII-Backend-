@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface ProductosRepository extends JpaRepository<Productos, Long> {
 
-    @Query("SELECT p FROM Productos p WHERE p.nombre LIKE %:nombre%")
+    @Query("SELECT p FROM Productos p WHERE LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))")
     List<Productos> buscarPorNombre(@Param("nombre") String nombre);
 
-    }
+}
 
