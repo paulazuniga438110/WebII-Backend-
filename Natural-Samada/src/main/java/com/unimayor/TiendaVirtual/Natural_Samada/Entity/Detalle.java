@@ -1,7 +1,7 @@
 package com.unimayor.TiendaVirtual.Natural_Samada.Entity;
 
-import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "detalle")
@@ -11,9 +11,9 @@ public class Detalle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_pro", referencedColumnName = "id")
-    private Productos productos;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_pro", referencedColumnName = "id", nullable = false)
+    private Productos producto;
 
     @Column(nullable = false)
     private Integer cantidad;
@@ -21,18 +21,19 @@ public class Detalle {
     @Column(nullable = false)
     private Double precio;
 
-    @ManyToOne
-    @JoinColumn(name = "id_venta", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_venta", referencedColumnName = "id", nullable = false)
     @JsonBackReference
     private Ventas venta;
 
     public Detalle() {}
 
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Productos getProductos() { return productos; }
-    public void setProductos(Productos productos) { this.productos = productos; }
+    public Productos getProducto() { return producto; }
+    public void setProducto(Productos producto) { this.producto = producto; }
 
     public Integer getCantidad() { return cantidad; }
     public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
@@ -43,5 +44,7 @@ public class Detalle {
     public Ventas getVenta() { return venta; }
     public void setVenta(Ventas venta) { this.venta = venta; }
 }
+
+
 
 

@@ -62,4 +62,3 @@ public class DetalleController {
         return ResponseEntity.ok(detalles);
     }
 }
-

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DetalleRepository extends JpaRepository<Detalle, Long> {
-
     List<Detalle> findByVentaId(Long idVenta);
 }
+
 

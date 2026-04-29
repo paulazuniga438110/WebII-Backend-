@@ -1,6 +1,7 @@
 package com.unimayor.TiendaVirtual.Natural_Samada.Entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -12,8 +13,7 @@ public class Ventas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Relación con clientes (FK en la tabla ventas)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente", referencedColumnName = "id")
     private Clientes cliente;
 
@@ -23,14 +23,12 @@ public class Ventas {
     @Column(nullable = false)
     private Double total;
 
-    @Column(length = 20, nullable = false)
-    private String fecha;
-
+    @Column(nullable = false)
+    private LocalDateTime fecha = LocalDateTime.now();
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Detalle> detalles;
-
 
     public Ventas() {}
 
@@ -46,9 +44,11 @@ public class Ventas {
     public Double getTotal() { return total; }
     public void setTotal(Double total) { this.total = total; }
 
-    public String getFecha() { return fecha; }
-    public void setFecha(String fecha) { this.fecha = fecha; }
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
     public List<Detalle> getDetalles() { return detalles; }
     public void setDetalles(List<Detalle> detalles) { this.detalles = detalles; }
 }
+
+

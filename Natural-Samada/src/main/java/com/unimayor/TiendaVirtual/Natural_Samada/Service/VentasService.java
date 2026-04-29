@@ -31,6 +31,7 @@ public class VentasService {
                 d.setVenta(venta);
             }
 
+            // Calcular el total automaticamente
             double total = venta.getDetalles()
                     .stream()
                     .mapToDouble(d -> d.getCantidad() * d.getPrecio())
@@ -46,3 +47,4 @@ public class VentasService {
         repository.deleteById(id);
     }
 }
+

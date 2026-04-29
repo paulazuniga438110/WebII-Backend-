@@ -16,7 +16,7 @@ public class Usuarios {
     @Column(nullable = false, unique = true, length = 200)
     private String correo;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     private String pass;
 
     @Column(nullable = false, length = 20)
@@ -24,7 +24,6 @@ public class Usuarios {
 
     public Usuarios() {}
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -40,4 +39,5 @@ public class Usuarios {
     public String getRol() { return rol; }
     public void setRol(String rol) { this.rol = rol; }
 }
+
 

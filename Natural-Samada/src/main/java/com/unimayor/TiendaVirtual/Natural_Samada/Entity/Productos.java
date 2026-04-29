@@ -12,20 +12,23 @@ public class Productos {
 
     private String codigo;
     private String nombre;
-    private Integer proveedor;
+
+    @ManyToOne
+    @JoinColumn(name = "proveedor", referencedColumnName = "id")
+    private Proveedor proveedor;
+
     private Integer stock;
     private Double precio;
     private Double preciov;
-
     private String categoria;
     private String imagen;
     private Double descuento;
-
 
     public Productos() {}
 
 
 
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -35,8 +38,8 @@ public class Productos {
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public Integer getProveedor() { return proveedor; }
-    public void setProveedor(Integer proveedor) { this.proveedor = proveedor; }
+    public Proveedor getProveedor() { return proveedor; }
+    public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
 
     public Integer getStock() { return stock; }
     public void setStock(Integer stock) { this.stock = stock; }

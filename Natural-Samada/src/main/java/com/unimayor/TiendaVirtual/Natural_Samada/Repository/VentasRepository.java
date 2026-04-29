@@ -6,6 +6,6 @@ import com.unimayor.TiendaVirtual.Natural_Samada.Entity.Ventas;
 
 @Repository
 public interface VentasRepository extends JpaRepository<Ventas, Long> {
-
 }
+
 

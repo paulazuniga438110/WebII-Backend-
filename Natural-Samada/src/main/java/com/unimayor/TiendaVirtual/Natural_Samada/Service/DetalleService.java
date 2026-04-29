@@ -1,6 +1,7 @@
 package com.unimayor.TiendaVirtual.Natural_Samada.Service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.unimayor.TiendaVirtual.Natural_Samada.Repository.DetalleRepository;
 import com.unimayor.TiendaVirtual.Natural_Samada.Entity.Detalle;
 
@@ -23,10 +24,12 @@ public class DetalleService {
         return repository.findById(id).orElse(null);
     }
 
+    @Transactional
     public Detalle guardar(Detalle detalle) {
         return repository.save(detalle);
     }
 
+    @Transactional
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
@@ -35,4 +38,3 @@ public class DetalleService {
         return repository.findByVentaId(idVenta);
     }
 }
-

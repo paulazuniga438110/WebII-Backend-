@@ -19,54 +19,58 @@ public class ClientesController {
     }
 
     @GetMapping
-    public List<Clientes> listar() {
-        return service.obtenerClientes();
+    public ResponseEntity<List<Clientes>> listar() {
+        return ResponseEntity.ok(service.obtenerClientes());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Clientes> obtener(@PathVariable Long id) {
         Clientes cliente = service.obtenerPorId(id);
-
         if (cliente == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(cliente);
     }
 
     @PostMapping
-    public Clientes crear(@RequestBody Clientes cliente) {
-        return service.guardarCliente(cliente);
+    public ResponseEntity<Clientes> crear(@RequestBody Clientes cliente) {
+        Clientes nuevo = service.guardarCliente(cliente);
+        return ResponseEntity.ok(nuevo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Clientes> actualizar(@PathVariable Long id, @RequestBody Clientes cliente) {
         Clientes actualizado = service.actualizarCliente(id, cliente);
-
         if (actualizado == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(actualizado);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         Clientes cliente = service.obtenerPorId(id);
-
         if (cliente == null) {
             return ResponseEntity.notFound().build();
         }
-
         service.eliminarPorId(id);
         return ResponseEntity.ok("Cliente eliminado correctamente");
     }
 
     @GetMapping("/buscar")
-    public List<Clientes> buscar(@RequestParam(required = false) String nombre) {
+    public ResponseEntity<List<Clientes>> buscar(@RequestParam(required = false) String nombre) {
         if (nombre == null || nombre.isEmpty()) {
-            return service.obtenerClientes();
+            return ResponseEntity.ok(service.obtenerClientes());
         }
-        return service.buscarPorNombre(nombre);
+        return ResponseEntity.ok(service.buscarPorNombre(nombre));
+    }
+
+    @GetMapping("/correo/{correo}")
+    public ResponseEntity<Clientes> obtenerPorCorreo(@PathVariable String correo) {
+        Clientes cliente = service.buscarPorCorreo(correo);
+        if (cliente == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(cliente);
     }
 }
