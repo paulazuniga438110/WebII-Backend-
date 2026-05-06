@@ -26,25 +26,24 @@ public class VentasService {
 
     public Ventas guardar(Ventas venta) {
         if (venta.getDetalles() != null && !venta.getDetalles().isEmpty()) {
-            // Vincular cada detalle con la venta
             for (Detalle d : venta.getDetalles()) {
                 d.setVenta(venta);
             }
-
-            // Calcular el total automaticamente
             double total = venta.getDetalles()
                     .stream()
                     .mapToDouble(d -> d.getCantidad() * d.getPrecio())
                     .sum();
-
             venta.setTotal(total);
         }
-
         return repository.save(venta);
     }
 
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
-}
 
+    public List<Ventas> buscarPorProducto(Long idProducto) {
+        return repository.findByProductoId(idProducto);
+    }
+
+}
