@@ -1,5 +1,6 @@
 package com.unimayor.TiendaVirtual.Natural_Samada.Service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.unimayor.TiendaVirtual.Natural_Samada.Repository.UsuariosRepository;
 import com.unimayor.TiendaVirtual.Natural_Samada.Entity.Usuarios;
@@ -10,9 +11,11 @@ import java.util.List;
 public class UsuariosService {
 
     private final UsuariosRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuariosService(UsuariosRepository repository) {
+    public UsuariosService(UsuariosRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Usuarios> listar() {
@@ -24,6 +27,9 @@ public class UsuariosService {
     }
 
     public Usuarios guardar(Usuarios usuario) {
+        if (usuario.getPass() != null && !usuario.getPass().startsWith("$2a$")) {
+            usuario.setPass(passwordEncoder.encode(usuario.getPass()));
+        }
         return repository.save(usuario);
     }
 
@@ -35,4 +41,3 @@ public class UsuariosService {
         return repository.findByCorreo(correo).orElse(null);
     }
 }
-
