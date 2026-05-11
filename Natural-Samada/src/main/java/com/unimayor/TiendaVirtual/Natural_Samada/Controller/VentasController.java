@@ -57,5 +57,11 @@ public class VentasController {
         service.eliminar(id);
         return ResponseEntity.ok("Venta eliminada correctamente");
     }
-}
 
+    @GetMapping("/producto/{idProducto}")
+    public ResponseEntity<List<Ventas>> obtenerPorProducto(@PathVariable Long idProducto) {
+        List<Ventas> ventas = service.buscarPorProducto(idProducto);
+        return ResponseEntity.ok(ventas);
+    }
+
+}
